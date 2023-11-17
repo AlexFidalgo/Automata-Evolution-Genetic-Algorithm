@@ -5,14 +5,18 @@ from config import Config
 
 class CellularAutomaton:
 
-    def __init__(self, N):
+    def __init__(self, N, ic = None):
 
         self.N = N
         self.width = self.N
-        self.height = 50
-        self.history =  [[random.choice([0, 1]) for _ in range(self.N)]]
-        self.cells_on_screen = [self.history[0][:]] + [[-1 for _ in range(self.N)] for _ in range(self.height - 1)]
-        
+        self.history =  self.get_initial_configuration(ic)
+
+    def get_initial_configuration(self, ic):
+
+        if ic == None:
+            return [[random.choice([0, 1]) for _ in range(self.N)]]
+        else:
+            return [ic]
 
     def draw_cells(self, screen):
 
@@ -35,7 +39,10 @@ class CellularAutomaton:
             self.cells_on_screen.pop(0)
             self.cells_on_screen.append(new_cells)
 
-    def simulate(self, generations, delay):
+    def simulate(self, height, delay):
+
+        self.height = height
+        self.cells_on_screen = [self.history[0][:]] + [[-1 for _ in range(self.N)] for _ in range(self.height - 1)]
 
         pygame.init()
         screen = pygame.display.set_mode((self.width*10, self.height*10))
@@ -57,12 +64,13 @@ class CellularAutomaton:
 
         pygame.quit()
 
+
 if __name__ == '__main__':
 
     N = Config.N
-    density_threshold = Config.density_threshold
     generations = Config.generations
     delay = Config.delay
+    height = Config.height
 
     automaton = CellularAutomaton(N)
-    automaton.simulate(generations, delay)
+    automaton.simulate(height, delay)
