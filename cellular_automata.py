@@ -9,7 +9,7 @@ class CellularAutomaton:
         self.N = N
         self.width = self.N
         self.height = 10
-        self.cells = [[-1 for _ in range(self.N)] for _ in range(self.height)]
+        self.cells = [[random.choice([0, 1]) for _ in range(self.N)]] + [[-1 for _ in range(self.N)] for _ in range(self.height - 1)]
 
     def draw_cells(self, screen):
 
