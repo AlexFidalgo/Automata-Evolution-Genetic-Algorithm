@@ -29,6 +29,7 @@ class CellularAutomaton:
                 pygame.draw.rect(screen, color, (j * 10, i * 10, 10, 10))
 
     def randomize(self):
+        
         new_cells = [random.choice([0, 1]) for _ in range(self.N)]
         self.history.append(new_cells[:])
 
@@ -45,7 +46,6 @@ class CellularAutomaton:
         self.cells_on_screen = [self.history[0][:]] + [[-1 for _ in range(self.N)] for _ in range(self.height - 1)]
 
         pygame.init()
-        font = pygame.font.Font(None, 36)
         screen = pygame.display.set_mode((self.width*10, self.height*10))
         pygame.display.set_caption('Cellular Automaton')
 
@@ -60,7 +60,14 @@ class CellularAutomaton:
             self.draw_cells(screen)
             self.randomize()
 
-            text = font.render(f"t = {self.t}", True, (255, 255, 0))
+            border_color = (0, 0, 0)
+            text = pygame.font.Font(None, 36).render(f"t = {self.t}", True, (255, 255, 0))
+            border_text = pygame.font.Font(None, 36).render(f"t = {self.t}", True, border_color)
+            text_position = (self.width * 10 - 80, 10)
+            screen.blit(border_text, (text_position[0] - 1, text_position[1] - 1))
+            screen.blit(border_text, (text_position[0] + 1, text_position[1] - 1))
+            screen.blit(border_text, (text_position[0] - 1, text_position[1] + 1))
+            screen.blit(border_text, (text_position[0] + 1, text_position[1] + 1))
             screen.blit(text, (self.width * 10 - 80, 10))
             pygame.display.flip()
 
