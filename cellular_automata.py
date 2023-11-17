@@ -1,6 +1,7 @@
 import pygame
 import random
 import time
+from config import Config
 
 class CellularAutomaton:
 
@@ -8,15 +9,13 @@ class CellularAutomaton:
 
         self.N = N
         self.width = self.N
-        self.height = 10
-        self.cells = [[random.choice([0, 1]) for _ in range(self.N)]] + [[-1 for _ in range(self.N)] for _ in range(self.height - 1)]
+        self.height = 50
+        self.cells_on_screen = [[random.choice([0, 1]) for _ in range(self.N)]] + [[-1 for _ in range(self.N)] for _ in range(self.height - 1)]
+        self.history = [self.cells_on_screen[0][:]]
 
     def draw_cells(self, screen):
 
-        # self.cells = [[random.choice([0, 1]) for _ in range(self.N)] for _ in range(self.height)]
-        self.history = [None] * self.height
-
-        for i, row in enumerate(self.cells):
+        for i, row in enumerate(self.cells_on_screen):
             for j, cell in enumerate(row):
                 if cell == -1:
                     color = (220, 220, 220)
@@ -26,15 +25,16 @@ class CellularAutomaton:
 
     def randomize(self):
         new_cells = [random.choice([0, 1]) for _ in range(self.N)]
+        self.history.append(new_cells[:])
 
         if self.t < self.height:
-            self.cells.insert(self.t, new_cells)
-            self.cells.pop()
+            self.cells_on_screen.insert(self.t, new_cells)
+            self.cells_on_screen.pop()
         else:
-            self.cells.pop(0)
-            self.cells.append(new_cells)
+            self.cells_on_screen.pop(0)
+            self.cells_on_screen.append(new_cells)
 
-    def simulate(self, generations):
+    def simulate(self, generations, delay):
 
         pygame.init()
         screen = pygame.display.set_mode((self.width*10, self.height*10))
@@ -52,10 +52,16 @@ class CellularAutomaton:
             self.randomize()
             pygame.display.flip()
 
-            time.sleep(1)
+            time.sleep(delay)
 
         pygame.quit()
 
 if __name__ == '__main__':
-    automaton = CellularAutomaton(N=10)
-    automaton.simulate(generations=100)
+
+    N = Config.N
+    density_threshold = Config.density_threshold
+    generations = Config.generations
+    delay = Config.delay
+
+    automaton = CellularAutomaton(N)
+    automaton.simulate(generations, delay)
