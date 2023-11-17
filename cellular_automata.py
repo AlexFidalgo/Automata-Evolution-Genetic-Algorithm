@@ -26,7 +26,13 @@ class CellularAutomaton:
 
     def randomize(self):
         new_cells = [random.choice([0, 1]) for _ in range(self.N)]
-        self.cells.insert(self.t, new_cells)
+
+        if self.t < self.height:
+            self.cells.insert(self.t, new_cells)
+            self.cells.pop()
+        else:
+            self.cells.pop(0)
+            self.cells.append(new_cells)
 
     def simulate(self, generations):
 
@@ -47,9 +53,6 @@ class CellularAutomaton:
             pygame.display.flip()
 
             time.sleep(1)
-
-            if len(self.history) > generations:
-                self.history.pop()
 
         pygame.quit()
 
