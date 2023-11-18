@@ -26,7 +26,7 @@ class CellularAutomaton:
                 if cell == -1:
                     color = (220, 220, 220)
                 else:
-                    color = (0, 0, 0) if cell == 0 else (255, 255, 255)
+                    color = (255, 255, 255) if cell == 0 else (0, 0, 0)
                 pygame.draw.rect(screen, color, (j * 10, i * 10, 10, 10))
 
     def render_text_with_border(self, screen):
@@ -84,4 +84,4 @@ if __name__ == '__main__':
     height = Config.height
 
     automaton = CellularAutomaton(N)
-    automaton.simulate(height = height, rule_function = randomize, delay = delay)
+    automaton.simulate(height = height, rule_function = get_all_white, delay = delay)
