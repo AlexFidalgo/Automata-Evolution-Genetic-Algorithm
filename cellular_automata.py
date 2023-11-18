@@ -2,6 +2,7 @@ import pygame
 import random
 import time
 from config import Config
+from rule_functions import *
 
 class CellularAutomaton:
 
@@ -28,18 +29,6 @@ class CellularAutomaton:
                     color = (0, 0, 0) if cell == 0 else (255, 255, 255)
                 pygame.draw.rect(screen, color, (j * 10, i * 10, 10, 10))
 
-    def randomize(self):
-
-        new_cells = [random.choice([0, 1]) for _ in range(self.N)]
-        self.history.append(new_cells[:])
-
-        if self.t < self.height:
-            self.cells_on_screen.insert(self.t, new_cells)
-            self.cells_on_screen.pop()
-        else:
-            self.cells_on_screen.pop(0)
-            self.cells_on_screen.append(new_cells)
-
     def render_text_with_border(self, screen):
 
         border_color = (0, 0, 0)
@@ -52,7 +41,7 @@ class CellularAutomaton:
         screen.blit(border_text, (text_position[0] + 1, text_position[1] + 1))
         screen.blit(text, (self.width * 10 - 80, 10))
 
-    def simulate(self, height, delay):
+    def simulate(self, height, rule_function, delay = 0.1):
 
         self.height = height
         self.cells_on_screen = [self.history[0][:]] + [[-1 for _ in range(self.N)] for _ in range(self.height - 1)]
@@ -70,7 +59,15 @@ class CellularAutomaton:
                     running = False
 
             self.draw_cells(screen)
-            self.randomize()
+
+            new_cells = rule_function(self.N)
+            self.history.append(new_cells[:])
+            if self.t < self.height:
+                self.cells_on_screen.insert(self.t, new_cells)
+                self.cells_on_screen.pop()
+            else:
+                self.cells_on_screen.pop(0)
+                self.cells_on_screen.append(new_cells)
 
             self.render_text_with_border(screen)
             pygame.display.flip()
@@ -87,4 +84,4 @@ if __name__ == '__main__':
     height = Config.height
 
     automaton = CellularAutomaton(N)
-    automaton.simulate(height, delay)
+    automaton.simulate(height = height, rule_function = randomize, delay = delay)
