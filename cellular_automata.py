@@ -67,7 +67,7 @@ class CellularAutomaton:
                 self.t += 1
                 self.draw_cells(screen)
 
-                new_cells = rule_function(self.N, self.history[-1][:])
+                new_cells = rule_function(self.history[-1][:])
                 self.history.append(new_cells[:])
 
                 if self.t < self.height:
