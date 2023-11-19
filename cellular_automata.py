@@ -79,9 +79,8 @@ class CellularAutomaton:
 if __name__ == '__main__':
 
     N = Config.N
-    generations = Config.generations
     delay = Config.delay
     height = Config.height
 
     automaton = CellularAutomaton(N)
-    automaton.simulate(height = height, rule_function = get_all_white, delay = delay)
+    automaton.simulate(height = height, rule_function = randomize, delay = delay)
