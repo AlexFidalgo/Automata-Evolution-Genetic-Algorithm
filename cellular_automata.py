@@ -51,27 +51,35 @@ class CellularAutomaton:
         pygame.display.set_caption('Cellular Automaton')
 
         running = True
+        pause = False
+
         self.t = 0
+        
         while running:
-            self.t += 1
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        pause = not pause
+            
+            if not pause:
+                self.t += 1
+                self.draw_cells(screen)
 
-            self.draw_cells(screen)
+                new_cells = rule_function(self.N, self.history[-1][:])
+                self.history.append(new_cells[:])
 
-            new_cells = rule_function(self.N)
-            self.history.append(new_cells[:])
-            if self.t < self.height:
-                self.cells_on_screen.insert(self.t, new_cells)
-                self.cells_on_screen.pop()
-            else:
-                self.cells_on_screen.pop(0)
-                self.cells_on_screen.append(new_cells)
+                if self.t < self.height:
+                    self.cells_on_screen.insert(self.t, new_cells)
+                    self.cells_on_screen.pop()
+                else:
+                    self.cells_on_screen.pop(0)
+                    self.cells_on_screen.append(new_cells)
 
-            self.render_text_with_border(screen)
-            pygame.display.flip()
-            time.sleep(delay)
+                self.render_text_with_border(screen)
+                pygame.display.flip()
+                time.sleep(delay)
 
         pygame.quit()
 
