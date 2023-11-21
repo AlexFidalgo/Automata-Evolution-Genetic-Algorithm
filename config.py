@@ -2,8 +2,9 @@ class Config:
     
     N = 100  # Size of the lattice
     generations = 20  # Number of generations to evolve
-
-    height = 50
+    
+    # Simulation parameters
+    height = 50 # number of vertical cells on screen
     delay = 0.1 # ms
 
     radius = 0 # Radius considered
