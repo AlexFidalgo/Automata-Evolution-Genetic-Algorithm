@@ -29,11 +29,11 @@ class CellularAutomaton:
                     color = (255, 255, 255) if cell == 0 else (0, 0, 0)
                 pygame.draw.rect(screen, color, (j * 10, i * 10, 10, 10))
 
-    def render_text_with_border(self, screen):
+    def render_text_with_border(self, screen, t):
 
         border_color = (0, 0, 0)
-        text = pygame.font.Font(None, 36).render(f"t = {self.t}", True, (255, 255, 0))
-        border_text = pygame.font.Font(None, 36).render(f"t = {self.t}", True, border_color)
+        text = pygame.font.Font(None, 36).render(f"t = {t}", True, (255, 255, 0))
+        border_text = pygame.font.Font(None, 36).render(f"t = {t}", True, border_color)
         text_position = (self.width * 10 - 80, 10)
         screen.blit(border_text, (text_position[0] - 1, text_position[1] - 1))
         screen.blit(border_text, (text_position[0] + 1, text_position[1] - 1))
@@ -52,9 +52,9 @@ class CellularAutomaton:
         running = True
         pause = False
 
-        self.t = 0
+        t = 0
         
-        while self.t <= stop:
+        while t <= stop:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
@@ -63,20 +63,20 @@ class CellularAutomaton:
                         pause = not pause
             
             if not pause:
-                self.t += 1
+                t += 1
                 self.draw_cells(screen, cells_on_screen)
 
                 new_cells = rule_function(current_cells = self.history[-1][:], rule = rule, r = r)
                 self.history.append(new_cells[:])
 
-                if self.t < height:
-                    cells_on_screen.insert(self.t, new_cells)
+                if t < height:
+                    cells_on_screen.insert(t, new_cells)
                     cells_on_screen.pop()
                 else:
                     cells_on_screen.pop(0)
                     cells_on_screen.append(new_cells)
 
-                self.render_text_with_border(screen)
+                self.render_text_with_border(screen, t)
                 pygame.display.flip()
                 time.sleep(delay)
 
