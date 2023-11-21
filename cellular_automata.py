@@ -87,9 +87,16 @@ class CellularAutomaton:
 
         if stop == None:
             stop = 2*self.N
+
+        t = 0
         
         while t <= stop:
-            pass
+            new_cells = rule_function(current_cells = self.history[-1][:], rule = rule, r = r)
+            self.history.append(new_cells[:])
+
+            t += 1
+
+        return self.history[-1]
 
 
 if __name__ == '__main__':
@@ -101,7 +108,8 @@ if __name__ == '__main__':
     rule = Config.rule
 
     r = 1
-    rule = 110
+    rule = 0
 
     automaton = CellularAutomaton(N)
-    automaton.simulate(height = height, rule_function = get_wolfram_rule, rule = rule, r = r, delay = delay, show_time = False)
+    # automaton.simulate(height = height, rule_function = get_wolfram_rule, rule = rule, r = r, delay = delay)
+    print(automaton.run(rule_function = get_wolfram_rule, rule = rule, r = r))
