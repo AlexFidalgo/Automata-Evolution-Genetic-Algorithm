@@ -92,7 +92,8 @@ if __name__ == '__main__':
     r = Config.radius
     rule = Config.rule
 
-    rule = 255
+    r = 2
+    rule = 4294967295
 
     automaton = CellularAutomaton(N)
     automaton.simulate(height = height, rule_function = get_wolfram_rule, rule = rule, r = r, delay = delay)
