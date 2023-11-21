@@ -1,23 +1,16 @@
 import pygame
-import random
 import time
 from config import Config
 from rule_functions import *
+from initialization import *
 
 class CellularAutomaton:
 
-    def __init__(self, N, ic = None):
+    def __init__(self, N, ic = None, distribution = 'random'):
 
         self.N = N
         self.width = self.N
-        self.history =  self.get_initial_configuration(ic)
-
-    def get_initial_configuration(self, ic):
-
-        if ic == None:
-            return [[random.choice([0, 1]) for _ in range(self.N)]]
-        else:
-            return [ic]
+        self.history = get_initial_configuration(N)
 
     def draw_cells(self, screen, cells_on_screen):
 
@@ -108,8 +101,8 @@ if __name__ == '__main__':
     rule = Config.rule
 
     r = 1
-    rule = 0
+    rule = 110
 
     automaton = CellularAutomaton(N)
-    # automaton.simulate(height = height, rule_function = get_wolfram_rule, rule = rule, r = r, delay = delay)
-    final_cells = automaton.run(rule_function = get_wolfram_rule, rule = rule, r = r)
+    automaton.simulate(height = height, rule_function = get_wolfram_rule, rule = rule, r = r, delay = delay)
+    # final_cells = automaton.run(rule_function = get_wolfram_rule, rule = rule, r = r)
