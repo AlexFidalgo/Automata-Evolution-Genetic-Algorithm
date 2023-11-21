@@ -112,4 +112,4 @@ if __name__ == '__main__':
 
     automaton = CellularAutomaton(N)
     # automaton.simulate(height = height, rule_function = get_wolfram_rule, rule = rule, r = r, delay = delay)
-    print(automaton.run(rule_function = get_wolfram_rule, rule = rule, r = r))
+    final_cells = automaton.run(rule_function = get_wolfram_rule, rule = rule, r = r)
