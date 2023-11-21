@@ -91,4 +91,4 @@ if __name__ == '__main__':
     height = Config.height
 
     automaton = CellularAutomaton(N)
-    automaton.simulate(height = height, rule_function = randomize, delay = delay)
+    automaton.simulate(height = height, rule_function = wolfram_rule, delay = delay)
