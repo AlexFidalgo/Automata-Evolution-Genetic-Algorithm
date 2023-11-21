@@ -19,9 +19,9 @@ class CellularAutomaton:
         else:
             return [ic]
 
-    def draw_cells(self, screen):
+    def draw_cells(self, screen, cells_on_screen):
 
-        for i, row in enumerate(self.cells_on_screen):
+        for i, row in enumerate(cells_on_screen):
             for j, cell in enumerate(row):
                 if cell == -1:
                     color = (220, 220, 220)
@@ -43,7 +43,7 @@ class CellularAutomaton:
 
     def simulate(self, height, rule_function, rule, r, delay = 0.1, stop = float('inf')):
 
-        self.cells_on_screen = [self.history[0][:]] + [[-1 for _ in range(self.N)] for _ in range(height - 1)]
+        cells_on_screen = [self.history[0][:]] + [[-1 for _ in range(self.N)] for _ in range(height - 1)]
 
         pygame.init()
         screen = pygame.display.set_mode((self.width*10, height*10))
@@ -64,17 +64,17 @@ class CellularAutomaton:
             
             if not pause:
                 self.t += 1
-                self.draw_cells(screen)
+                self.draw_cells(screen, cells_on_screen)
 
                 new_cells = rule_function(current_cells = self.history[-1][:], rule = rule, r = r)
                 self.history.append(new_cells[:])
 
                 if self.t < height:
-                    self.cells_on_screen.insert(self.t, new_cells)
-                    self.cells_on_screen.pop()
+                    cells_on_screen.insert(self.t, new_cells)
+                    cells_on_screen.pop()
                 else:
-                    self.cells_on_screen.pop(0)
-                    self.cells_on_screen.append(new_cells)
+                    cells_on_screen.pop(0)
+                    cells_on_screen.append(new_cells)
 
                 self.render_text_with_border(screen)
                 pygame.display.flip()
