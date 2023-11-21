@@ -10,6 +10,8 @@ class Config:
     radius = 0 # Radius considered
     rule = 0 # wolfram rule to be applied
 
+    custom_ic = [1, 1, 1]
+
 
 # last rule
 #   radius = 0: 2**(2**1) - 1 = 3

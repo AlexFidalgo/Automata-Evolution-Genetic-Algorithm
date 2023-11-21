@@ -103,6 +103,6 @@ if __name__ == '__main__':
     r = 1
     rule = 110
 
-    automaton = CellularAutomaton(N)
+    automaton = CellularAutomaton(N, ic = 'uniformly distributed')
     automaton.simulate(height = height, rule_function = get_wolfram_rule, rule = rule, r = r, delay = delay)
     # final_cells = automaton.run(rule_function = get_wolfram_rule, rule = rule, r = r)
