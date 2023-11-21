@@ -6,5 +6,11 @@ class Config:
     height = 50
     delay = 0.1 # ms
 
-    radius = 1 # Radius considered
-    rule = 120 # wolfram rule to be applied
+    radius = 0 # Radius considered
+    rule = 0 # wolfram rule to be applied
+
+
+# last rule
+#   radius = 0: 2**(2**1) - 1 = 3
+#   radius = 1: 2**(2**3) - 1 = 255
+#   radius = 2: 2**(2**5) - 1 = 4294967295
