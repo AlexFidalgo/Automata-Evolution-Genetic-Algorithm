@@ -43,11 +43,10 @@ class CellularAutomaton:
 
     def simulate(self, height, rule_function, rule, r, delay = 0.1, stop = float('inf')):
 
-        self.height = height
-        self.cells_on_screen = [self.history[0][:]] + [[-1 for _ in range(self.N)] for _ in range(self.height - 1)]
+        self.cells_on_screen = [self.history[0][:]] + [[-1 for _ in range(self.N)] for _ in range(height - 1)]
 
         pygame.init()
-        screen = pygame.display.set_mode((self.width*10, self.height*10))
+        screen = pygame.display.set_mode((self.width*10, height*10))
         pygame.display.set_caption('Cellular Automaton')
 
         running = True
@@ -70,7 +69,7 @@ class CellularAutomaton:
                 new_cells = rule_function(current_cells = self.history[-1][:], rule = rule, r = r)
                 self.history.append(new_cells[:])
 
-                if self.t < self.height:
+                if self.t < height:
                     self.cells_on_screen.insert(self.t, new_cells)
                     self.cells_on_screen.pop()
                 else:
@@ -84,7 +83,7 @@ class CellularAutomaton:
         pygame.quit()
 
     def run(self, rule_function, rule, r, stop):
-        
+        pass
 
 
 if __name__ == '__main__':
