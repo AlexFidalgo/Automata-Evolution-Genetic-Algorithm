@@ -6,11 +6,11 @@ from initialization import *
 
 class CellularAutomaton:
 
-    def __init__(self, N, ic = None, distribution = 'random'):
+    def __init__(self, N, ic_function = get_random_ic, **kwargs):
 
         self.N = N
         self.width = self.N
-        self.history = get_initial_configuration(N)
+        self.history = ic_function(N, **kwargs)
 
     def draw_cells(self, screen, cells_on_screen):
 
@@ -34,7 +34,7 @@ class CellularAutomaton:
         screen.blit(border_text, (text_position[0] + 1, text_position[1] + 1))
         screen.blit(text, (self.width * 10 - 80, 10))
 
-    def simulate(self, height, rule_function, rule, r, delay = 0.1, stop = float('inf'), show_time = True):
+    def simulate(self, height, rule_function, stop = float('inf'), show_time = True, delay = 0.1, **kwargs):
 
         cells_on_screen = [self.history[0][:]] + [[-1 for _ in range(self.N)] for _ in range(height - 1)]
 
@@ -59,7 +59,7 @@ class CellularAutomaton:
                 t += 1
                 self.draw_cells(screen, cells_on_screen)
 
-                new_cells = rule_function(current_cells = self.history[-1][:], rule = rule, r = r)
+                new_cells = rule_function(current_cells = self.history[-1][:], **kwargs)
                 self.history.append(new_cells[:])
 
                 if t < height:
@@ -100,9 +100,17 @@ if __name__ == '__main__':
     r = Config.radius
     rule = Config.rule
 
+    N = 50
     r = 1
     rule = 110
+    delay = 1
 
-    automaton = CellularAutomaton(N, ic = 'uniformly distributed')
+    automaton = CellularAutomaton(N, ic_function = get_uniformly_distributed_ic, predominant_color = 'black')
+    # automaton = CellularAutomaton(N, ic_function = get_random_ic)
+
     automaton.simulate(height = height, rule_function = get_wolfram_rule, rule = rule, r = r, delay = delay)
-    # final_cells = automaton.run(rule_function = get_wolfram_rule, rule = rule, r = r)
+    # automaton.simulate(height = height, rule_function = get_all_black, delay = delay)
+
+    final_cells = automaton.run(rule_function = get_wolfram_rule, rule = rule, r = r)
+
+    print(automaton.history)
