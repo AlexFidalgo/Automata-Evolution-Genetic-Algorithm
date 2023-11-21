@@ -41,7 +41,7 @@ class CellularAutomaton:
         screen.blit(border_text, (text_position[0] + 1, text_position[1] + 1))
         screen.blit(text, (self.width * 10 - 80, 10))
 
-    def simulate(self, height, rule_function, rule, r, delay = 0.1, stop = float('inf')):
+    def simulate(self, height, rule_function, rule, r, delay = 0.1, stop = float('inf'), show_time = True):
 
         cells_on_screen = [self.history[0][:]] + [[-1 for _ in range(self.N)] for _ in range(height - 1)]
 
@@ -76,14 +76,20 @@ class CellularAutomaton:
                     cells_on_screen.pop(0)
                     cells_on_screen.append(new_cells)
 
-                self.render_text_with_border(screen, t)
+                if show_time:
+                    self.render_text_with_border(screen, t)
                 pygame.display.flip()
                 time.sleep(delay)
 
         pygame.quit()
 
-    def run(self, rule_function, rule, r, stop):
-        pass
+    def run(self, rule_function, rule, r, stop= None):
+
+        if stop == None:
+            stop = 2*self.N
+        
+        while t <= stop:
+            pass
 
 
 if __name__ == '__main__':
@@ -98,4 +104,4 @@ if __name__ == '__main__':
     rule = 110
 
     automaton = CellularAutomaton(N)
-    automaton.simulate(height = height, rule_function = get_wolfram_rule, rule = rule, r = r, delay = delay)
+    automaton.simulate(height = height, rule_function = get_wolfram_rule, rule = rule, r = r, delay = delay, show_time = False)
