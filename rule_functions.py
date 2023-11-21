@@ -25,7 +25,7 @@ def get_all_white(current_cells):
 
     return new_cells
 
-def wolfram_rule(current_cells, rule = 110, r = 1):
+def get_wolfram_rule(current_cells, rule = 110, r = 1):
 
     N = len(current_cells)
     

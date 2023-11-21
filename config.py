@@ -6,4 +6,5 @@ class Config:
     height = 50
     delay = 0.1 # ms
 
-
+    radius = 1 # Radius considered
+    rule = 120 # wolfram rule to be applied
