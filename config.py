@@ -12,8 +12,3 @@ class Config:
 
     # Genetic Algorithm parameters
     population_size = 100
-
-# last rule
-#   radius = 0: 2**(2**1) - 1 = 3
-#   radius = 1: 2**(2**3) - 1 = 255
-#   radius = 2: 2**(2**5) - 1 = 4294967295
