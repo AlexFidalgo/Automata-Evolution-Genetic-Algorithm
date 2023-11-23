@@ -103,7 +103,6 @@ if __name__ == '__main__':
     N = 50
     r = 1
     rule = 110
-    delay = 1
 
     automaton = CellularAutomaton(N, ic_function = get_uniformly_distributed_ic, predominant_color = 'black')
     # automaton = CellularAutomaton(N, ic_function = get_random_ic)
