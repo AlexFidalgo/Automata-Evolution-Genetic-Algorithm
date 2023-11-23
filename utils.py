@@ -37,6 +37,15 @@ def render_text_with_border(screen, t, width):
     screen.blit(border_text, (text_position[0] + 1, text_position[1] + 1))
     screen.blit(text, (width * 10 - 80, 10))
 
+def draw_cells(screen, cells_on_screen):
+
+    for i, row in enumerate(cells_on_screen):
+        for j, cell in enumerate(row):
+            if cell == -1:
+                color = (220, 220, 220)
+            else:
+                color = (255, 255, 255) if cell == 0 else (0, 0, 0)
+            pygame.draw.rect(screen, color, (j * 10, i * 10, 10, 10))
 
 if __name__ == '__main__':
 

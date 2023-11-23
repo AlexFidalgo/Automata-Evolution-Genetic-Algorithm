@@ -12,16 +12,6 @@ class CellularAutomaton:
         self.width = self.N
         self.history = ic_function(N, **kwargs)
 
-    def draw_cells(self, screen, cells_on_screen):
-
-        for i, row in enumerate(cells_on_screen):
-            for j, cell in enumerate(row):
-                if cell == -1:
-                    color = (220, 220, 220)
-                else:
-                    color = (255, 255, 255) if cell == 0 else (0, 0, 0)
-                pygame.draw.rect(screen, color, (j * 10, i * 10, 10, 10))
-
     def simulate(self, height, rule_function, stop = float('inf'), show_time = True, delay = 0.1, **kwargs):
 
         cells_on_screen = [self.history[0][:]] + [[-1 for _ in range(self.N)] for _ in range(height - 1)]
@@ -45,7 +35,7 @@ class CellularAutomaton:
             
             if not pause:
                 t += 1
-                self.draw_cells(screen, cells_on_screen)
+                draw_cells(screen, cells_on_screen)
 
                 new_cells = rule_function(current_cells = self.history[-1][:], **kwargs)
                 self.history.append(new_cells[:])
