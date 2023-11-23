@@ -1,3 +1,4 @@
+import pygame
 
 def get_total_number_of_cells(r): 
 
@@ -23,6 +24,18 @@ def get_rule_table(r, rule):
         rule_dict[binary_representation] = int(bits_rule[total_number_of_bits -1 - i])
     
     return rule_dict
+
+def render_text_with_border(screen, t, width):
+
+    border_color = (0, 0, 0)
+    text = pygame.font.Font(None, 36).render(f"t = {t}", True, (255, 255, 0))
+    border_text = pygame.font.Font(None, 36).render(f"t = {t}", True, border_color)
+    text_position = (width * 10 - 80, 10)
+    screen.blit(border_text, (text_position[0] - 1, text_position[1] - 1))
+    screen.blit(border_text, (text_position[0] + 1, text_position[1] - 1))
+    screen.blit(border_text, (text_position[0] - 1, text_position[1] + 1))
+    screen.blit(border_text, (text_position[0] + 1, text_position[1] + 1))
+    screen.blit(text, (width * 10 - 80, 10))
 
 
 if __name__ == '__main__':

@@ -22,18 +22,6 @@ class CellularAutomaton:
                     color = (255, 255, 255) if cell == 0 else (0, 0, 0)
                 pygame.draw.rect(screen, color, (j * 10, i * 10, 10, 10))
 
-    def render_text_with_border(self, screen, t):
-
-        border_color = (0, 0, 0)
-        text = pygame.font.Font(None, 36).render(f"t = {t}", True, (255, 255, 0))
-        border_text = pygame.font.Font(None, 36).render(f"t = {t}", True, border_color)
-        text_position = (self.width * 10 - 80, 10)
-        screen.blit(border_text, (text_position[0] - 1, text_position[1] - 1))
-        screen.blit(border_text, (text_position[0] + 1, text_position[1] - 1))
-        screen.blit(border_text, (text_position[0] - 1, text_position[1] + 1))
-        screen.blit(border_text, (text_position[0] + 1, text_position[1] + 1))
-        screen.blit(text, (self.width * 10 - 80, 10))
-
     def simulate(self, height, rule_function, stop = float('inf'), show_time = True, delay = 0.1, **kwargs):
 
         cells_on_screen = [self.history[0][:]] + [[-1 for _ in range(self.N)] for _ in range(height - 1)]
@@ -70,7 +58,7 @@ class CellularAutomaton:
                     cells_on_screen.append(new_cells)
 
                 if show_time:
-                    self.render_text_with_border(screen, t)
+                    render_text_with_border(screen, t, self.width)
                 pygame.display.flip()
                 time.sleep(delay)
 
