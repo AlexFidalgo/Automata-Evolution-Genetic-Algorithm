@@ -62,7 +62,7 @@ class CellularAutomaton:
         t = 0
         
         while t <= stop:
-            new_cells = rule_function(current_cells = self.history[-1][:], rule = rule, r = r)
+            new_cells = rule_function(current_cells = self.history[-1][:], **kwargs)
             self.history.append(new_cells[:])
 
             t += 1
