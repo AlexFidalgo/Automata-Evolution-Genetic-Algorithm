@@ -6,10 +6,11 @@ from initialization import *
 
 class CellularAutomaton:
 
-    def __init__(self, N, ic_function = get_random_ic, **kwargs):
+    def __init__(self, N, r, ic_function = get_random_ic, **kwargs):
 
         self.N = N
         self.width = self.N
+        self.r = r
         self.history = ic_function(N, **kwargs)
 
     def simulate(self, height, rule_function, stop = float('inf'), show_time = True, delay = 0.1, **kwargs):
@@ -37,7 +38,7 @@ class CellularAutomaton:
                 t += 1
                 draw_cells(screen, cells_on_screen)
 
-                new_cells = rule_function(current_cells = self.history[-1][:], **kwargs)
+                new_cells = rule_function(self.history[-1][:], self.r, **kwargs)
                 self.history.append(new_cells[:])
 
                 if t < height:
@@ -82,11 +83,11 @@ if __name__ == '__main__':
     r = 1
     rule = 110
 
-    automaton = CellularAutomaton(N, ic_function = get_uniformly_distributed_ic, predominant_color = 'black')
+    automaton = CellularAutomaton(N, r, ic_function = get_uniformly_distributed_ic, predominant_color = 'black')
     # automaton = CellularAutomaton(N, ic_function = get_random_ic)
 
-    automaton.simulate(height = height, rule_function = get_wolfram_rule, rule = rule, r = r, delay = delay)
-    # automaton.simulate(height = height, rule_function = get_all_black, delay = delay)
+    # automaton.simulate(height = height, rule_function = get_wolfram_rule, rule = rule, delay = delay)
+    automaton.simulate(height = height, rule_function = get_all_black, delay = delay)
 
     final_cells = automaton.run(rule_function = get_wolfram_rule, rule = rule, r = r)
 

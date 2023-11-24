@@ -1,7 +1,7 @@
 import random
 from utils import *
 
-def randomize(current_cells):
+def randomize(current_cells, r):
 
     N = len(current_cells)
 
@@ -9,7 +9,7 @@ def randomize(current_cells):
 
     return new_cells
 
-def get_all_black(current_cells): #last wolfram_rule
+def get_all_black(current_cells, r): #last wolfram_rule
 
     N = len(current_cells)
 
@@ -17,7 +17,7 @@ def get_all_black(current_cells): #last wolfram_rule
 
     return new_cells
 
-def get_all_white(current_cells): #first wolfram_rule
+def get_all_white(current_cells, r): #first wolfram_rule
 
     N = len(current_cells)
 
@@ -25,7 +25,7 @@ def get_all_white(current_cells): #first wolfram_rule
 
     return new_cells
 
-def get_wolfram_rule(current_cells, rule = 110, r = 1):
+def get_wolfram_rule(current_cells, r, rule = 110):
 
     N = len(current_cells)
     
