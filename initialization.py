@@ -29,10 +29,10 @@ def get_uniformly_distributed_ic(N, predominant_color=None):
     a = int(N * density)
     b = N - a
 
-    if predominant_color == 'black':
+    if predominant_color == 1:
         ones_count = max(a, b)
         zeros_count = min(a, b)
-    elif predominant_color == 'white':
+    elif predominant_color == 0:
         zeros_count = max(a, b)
         ones_count = min(a, b)
     else:
@@ -47,5 +47,5 @@ if __name__ == '__main__':
     
     N = 5
     initial_config_default = get_uniformly_distributed_ic(N)[0]
-    initial_config_black = get_uniformly_distributed_ic(N, predominant_color='black')[0]
-    initial_config_white = get_uniformly_distributed_ic(N, predominant_color='white')[0]
+    initial_config_black = get_uniformly_distributed_ic(N, predominant_color=1)[0]
+    initial_config_white = get_uniformly_distributed_ic(N, predominant_color=0)[0]
