@@ -18,6 +18,8 @@ class Chromosome(CellularAutomaton):
     def show_dna(self):
         print(self.dna)
 
+    
+
 
 
 if __name__ == '__main__':
@@ -27,9 +29,9 @@ if __name__ == '__main__':
     rule = 110
     height = Config.height
     
-    automaton1 = Chromosome(N, r, get_all_black)
+    # automaton1 = Chromosome(N, r, get_all_black)
     automaton2 = Chromosome(N, r, get_wolfram_rule, rule = rule)
 
     ic = get_uniformly_distributed_ic(N, predominant_color=1)
 
-    automaton2.simulate(height, ic)
+    print(automaton2.run(ic))
