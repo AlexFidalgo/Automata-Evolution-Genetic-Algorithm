@@ -47,7 +47,7 @@ def get_wolfram_rule(current_cells, r, rule = 110):
         
     return new_cells
 
-def get_rule_from_flat_distribution(N, r):
+def get_rule_from_flat_distribution(r):
     
     rule_size = 2**get_total_number_of_cells(r)
 
