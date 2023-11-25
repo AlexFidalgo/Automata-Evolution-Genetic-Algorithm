@@ -4,11 +4,11 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from initialization import *
 
-def test_get_uniformly_distributed_ic(num_iterations, N=51):
+def test_get_uniformly_distributed_ic(num_iterations, N=51, predominant_color=None):
     densities = []
 
     for _ in range(num_iterations):
-        initial_config = get_uniformly_distributed_ic(N)[0]
+        initial_config = get_uniformly_distributed_ic(N, predominant_color)[0]
         density_of_ones = sum(initial_config) / N
         densities.append(density_of_ones)
 
@@ -20,4 +20,4 @@ def test_get_uniformly_distributed_ic(num_iterations, N=51):
     plt.show()
 
 num_iterations = 1000
-test_get_uniformly_distributed_ic(num_iterations)
+test_get_uniformly_distributed_ic(num_iterations, predominant_color='white')
