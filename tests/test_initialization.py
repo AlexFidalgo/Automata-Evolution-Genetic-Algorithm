@@ -20,4 +20,4 @@ def test_get_uniformly_distributed_ic(num_iterations, N=51, predominant_color=No
     plt.show()
 
 num_iterations = 1000
-test_get_uniformly_distributed_ic(num_iterations, predominant_color='white')
+test_get_uniformly_distributed_ic(num_iterations)

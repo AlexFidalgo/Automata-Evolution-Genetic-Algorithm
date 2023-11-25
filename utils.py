@@ -47,6 +47,26 @@ def draw_cells(screen, cells_on_screen):
                 color = (255, 255, 255) if cell == 0 else (0, 0, 0)
             pygame.draw.rect(screen, color, (j * 10, i * 10, 10, 10))
 
+def get_new_cells(rule_dict, current_cells, r):
+
+    N = len(current_cells)
+
+    new_cells = []
+    
+    for c in range(N):
+        
+        input_str = ''
+        
+        for i in range(-r, r+1):
+            
+            corrected_index = (c+i)%len(current_cells)
+            
+            input_str += str(current_cells[corrected_index])
+            
+        new_cells.append(rule_dict[input_str])
+        
+    return new_cells
+
 if __name__ == '__main__':
 
 # last rule

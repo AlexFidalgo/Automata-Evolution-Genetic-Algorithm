@@ -9,43 +9,25 @@ def randomize(current_cells, r):
 
     return new_cells
 
-def get_all_black(current_cells, r): #last wolfram_rule
+def get_all_black(r): #last wolfram_rule
 
-    N = len(current_cells)
+    rule = get_total_number_of_possible_rules(r)
 
-    new_cells = [1 for _ in range(N)]
+    rule_dict = get_rule_table(r, rule-1)
 
-    return new_cells
+    return rule_dict
 
-def get_all_white(current_cells, r): #first wolfram_rule
+def get_all_white(r): #first wolfram_rule
 
-    N = len(current_cells)
+    rule_dict = get_rule_table(r, rule)
 
-    new_cells = [0 for _ in range(N)]
+    return rule_dict
 
-    return new_cells
-
-def get_wolfram_rule(current_cells, r, rule = 110):
-
-    N = len(current_cells)
+def get_wolfram_rule(r, rule = 110):
     
     rule_dict = get_rule_table(r, rule)
     
-    new_cells = []
-    
-    for c in range(N):
-        
-        input_str = ''
-        
-        for i in range(-r, r+1):
-            
-            corrected_index = (c+i)%len(current_cells)
-            
-            input_str += str(current_cells[corrected_index])
-            
-        new_cells.append(rule_dict[input_str])
-        
-    return new_cells
+    return rule_dict
 
 def get_rule_from_flat_distribution(r):
     
@@ -55,6 +37,7 @@ def get_rule_from_flat_distribution(r):
 
     # Iterate over all possible densities and assign a random rule for each
     for density in range(rule_size + 1):
+
         # Create a rule with the desired density
         ones_count = density
         zeros_count = rule_size - density
@@ -67,10 +50,10 @@ def get_rule_from_flat_distribution(r):
         
     selected_rule = random.choice(list_of_candidate_rules)
 
-    # rule_dict = {format(i, '0' + str(2*r + 1) + 'b'): selected_rule[i] 
-    #             for i in range(rule_size)}
+    rule_dict = {format(i, '0' + str(2*r + 1) + 'b'): selected_rule[i] 
+                for i in range(rule_size)}
 
-    return selected_rule
+    return rule_dict
 
     
     

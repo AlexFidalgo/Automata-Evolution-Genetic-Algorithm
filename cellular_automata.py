@@ -6,19 +6,22 @@ from initialization import *
 
 class CellularAutomaton:
 
-    def __init__(self, N, r, ic_function = get_random_ic, **kwargs):
+    def __init__(self, N, r, rule_function, ic_function = get_random_ic, **kwargs):
+
+        ic_function_kwargs = {key: kwargs[key] for key in kwargs if key in ic_function.__code__.co_varnames}
+        rule_function_kwargs = {key: kwargs[key] for key in kwargs if key in rule_function.__code__.co_varnames}
 
         self.N = N
-        self.width = self.N
         self.r = r
-        self.history = ic_function(N, **kwargs)
+        self.history = ic_function(N, **ic_function_kwargs)
+        self.dna = rule_function(r, **rule_function_kwargs) # rule_dict
 
-    def simulate(self, height, rule_function, stop = float('inf'), show_time = True, delay = 0.1, **kwargs):
+    def simulate(self, height, stop = float('inf'), show_time = True, delay = 0.1):
 
         cells_on_screen = [self.history[0][:]] + [[-1 for _ in range(self.N)] for _ in range(height - 1)]
 
         pygame.init()
-        screen = pygame.display.set_mode((self.width*10, height*10))
+        screen = pygame.display.set_mode((self.N*10, height*10))
         pygame.display.set_caption('Cellular Automaton')
 
         running = True
@@ -38,7 +41,7 @@ class CellularAutomaton:
                 t += 1
                 draw_cells(screen, cells_on_screen)
 
-                new_cells = rule_function(self.history[-1][:], self.r, **kwargs)
+                new_cells = get_new_cells(self.dna, self.history[-1][:], self.r)
                 self.history.append(new_cells[:])
 
                 if t < height:
@@ -49,13 +52,13 @@ class CellularAutomaton:
                     cells_on_screen.append(new_cells)
 
                 if show_time:
-                    render_text_with_border(screen, t, self.width)
+                    render_text_with_border(screen, t, self.N)
                 pygame.display.flip()
                 time.sleep(delay)
 
         pygame.quit()
 
-    def run(self, rule_function, rule, r, stop= None):
+    def run(self, stop= None):
 
         if stop == None:
             stop = 2*self.N
@@ -63,7 +66,7 @@ class CellularAutomaton:
         t = 0
         
         while t <= stop:
-            new_cells = rule_function(current_cells = self.history[-1][:], **kwargs)
+            new_cells = get_new_cells(self.dna, self.history[-1][:], self.r)
             self.history.append(new_cells[:])
 
             t += 1
@@ -83,12 +86,17 @@ if __name__ == '__main__':
     r = 1
     rule = 110
 
-    automaton = CellularAutomaton(N, r, ic_function = get_uniformly_distributed_ic, predominant_color = 'black')
-    # automaton = CellularAutomaton(N, ic_function = get_random_ic)
+    automaton1 = CellularAutomaton(N, r, get_all_black)
+    automaton2 = CellularAutomaton(N, r, get_wolfram_rule, rule = rule)
+    automaton3 = CellularAutomaton(N, r, get_all_black, get_uniformly_distributed_ic, predominant_color='black')
+    automaton4 = CellularAutomaton(N, r, get_wolfram_rule, get_uniformly_distributed_ic, predominant_color='black', rule = rule)
 
-    # automaton.simulate(height = height, rule_function = get_wolfram_rule, rule = rule, delay = delay)
-    automaton.simulate(height = height, rule_function = get_all_black, delay = delay)
+    automaton4.simulate(height = height)
+    # print(automaton4.run())
 
-    final_cells = automaton.run(rule_function = get_wolfram_rule, rule = rule, r = r)
+    # final_cells = automaton.run(rule_function = get_wolfram_rule, rule = rule, r = r)
 
-    print(automaton.history)
+    # print(automaton.history)
+
+    # c = CellularAutomaton(N, r, get_rule_from_flat_distribution, get_uniformly_distributed_ic, predominant_color='black')
+    # result = c.simulate(height)
