@@ -8,15 +8,16 @@ class CellularAutomaton:
 
     def __init__(self, N, r, rule_function, ic_function = get_random_ic, **kwargs):
 
-        ic_function_kwargs = {key: kwargs[key] for key in kwargs if key in ic_function.__code__.co_varnames}
-        rule_function_kwargs = {key: kwargs[key] for key in kwargs if key in rule_function.__code__.co_varnames}
+        # ic_function_kwargs = {key: kwargs[key] for key in kwargs if key in ic_function.__code__.co_varnames}
+        # rule_function_kwargs = {key: kwargs[key] for key in kwargs if key in rule_function.__code__.co_varnames}
 
         self.N = N
         self.r = r
-        self.history = ic_function(N, **ic_function_kwargs)
-        self.dna = rule_function(r, **rule_function_kwargs) # rule_dict
+        self.dna = rule_function(r, **kwargs) # rule_dict
 
-    def simulate(self, height, stop = float('inf'), show_time = True, delay = 0.1):
+    def simulate(self, height, ic, stop = float('inf'), show_time = True, delay = 0.1):
+
+        self.history = [ic]
 
         cells_on_screen = [self.history[0][:]] + [[-1 for _ in range(self.N)] for _ in range(height - 1)]
 
@@ -58,7 +59,9 @@ class CellularAutomaton:
 
         pygame.quit()
 
-    def run(self, stop= None):
+    def run(self, ic, stop= None):
+
+        self.history = [ic]
 
         if stop == None:
             stop = 2*self.N
@@ -88,15 +91,7 @@ if __name__ == '__main__':
 
     automaton1 = CellularAutomaton(N, r, get_all_black)
     automaton2 = CellularAutomaton(N, r, get_wolfram_rule, rule = rule)
-    automaton3 = CellularAutomaton(N, r, get_all_black, get_uniformly_distributed_ic, predominant_color='black')
-    automaton4 = CellularAutomaton(N, r, get_wolfram_rule, get_uniformly_distributed_ic, predominant_color='black', rule = rule)
 
-    automaton4.simulate(height = height)
-    # print(automaton4.run())
+    ic = get_uniformly_distributed_ic(N, predominant_color=1)
 
-    # final_cells = automaton.run(rule_function = get_wolfram_rule, rule = rule, r = r)
-
-    # print(automaton.history)
-
-    # c = CellularAutomaton(N, r, get_rule_from_flat_distribution, get_uniformly_distributed_ic, predominant_color='black')
-    # result = c.simulate(height)
+    automaton2.simulate(height, ic)

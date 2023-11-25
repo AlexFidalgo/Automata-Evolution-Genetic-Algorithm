@@ -15,33 +15,21 @@ class Chromosome(CellularAutomaton):
     def __init__(self, N, r, rule_function, ic_function=get_random_ic, **kwargs):
         super().__init__(N, r, rule_function, ic_function, **kwargs)
 
-        self.predominant_color = self.get_ic_predominant_color(**kwargs)
-
     def show_dna(self):
         print(self.dna)
 
-    def get_ic_predominant_color(self, **kwargs):
-        if 'predominant_color' in kwargs:
-            return kwargs['predominant_color']
 
-        sum_cells = sum(self.history[0])
-        if sum_cells > self.N/2:
-            return 1
-        else:
-            return 0
 
 if __name__ == '__main__':
 
-    N = 5
+    N = 51
     r = 1
+    rule = 110
+    height = Config.height
     
-    c1 = Chromosome(N, r, get_rule_from_flat_distribution, get_uniformly_distributed_ic)
-    c2 = Chromosome(N, r, get_rule_from_flat_distribution, get_uniformly_distributed_ic)
+    automaton1 = Chromosome(N, r, get_all_black)
+    automaton2 = Chromosome(N, r, get_wolfram_rule, rule = rule)
 
-    result = c.run()
+    ic = get_uniformly_distributed_ic(N, predominant_color=1)
 
-    print(result)
-
-    # delay = Config.delay
-    # height = Config.height
-    # c.simulate(height = height, delay = delay)
+    automaton2.simulate(height, ic)

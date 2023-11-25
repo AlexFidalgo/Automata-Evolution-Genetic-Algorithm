@@ -3,13 +3,13 @@ from config import Config
 
 def get_random_ic(N): 
     
-    return [[random.choice([0, 1]) for _ in range(N)]]
+    return [random.choice([0, 1]) for _ in range(N)]
 
 def get_custom_ic(N):
     
     ic = Config.custom_ic
     
-    return [ic]
+    return ic
 
 def get_uniformly_distributed_ic(N, predominant_color=None):
     """
@@ -41,7 +41,7 @@ def get_uniformly_distributed_ic(N, predominant_color=None):
 
     initial_config = [1] * ones_count + [0] * zeros_count
     random.shuffle(initial_config)
-    return [initial_config]
+    return initial_config
 
 if __name__ == '__main__':
     
