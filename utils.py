@@ -4,6 +4,10 @@ def get_total_number_of_cells(r):
 
     return 2*r + 1
 
+def get_number_of_combination_of_bits(total_number_of_cells):
+    
+    return 2**total_number_of_cells
+
 def get_total_number_of_possible_rules(r):
 
     number_of_considered_cells = get_total_number_of_cells(r)
@@ -13,7 +17,7 @@ def get_total_number_of_possible_rules(r):
 def get_rule_table(r, rule):
 
     number_of_considered_cells = get_total_number_of_cells(r)
-    total_number_of_bits = get_total_number_of_possible_rules(r)
+    total_number_of_bits = get_number_of_combination_of_bits(number_of_considered_cells)
     
     binary_string = bin(rule)[2:]
     bits_rule = format(int(binary_string, 2), f'0{total_number_of_bits}b')
