@@ -74,8 +74,7 @@ class CellularAutomaton:
 
             t += 1
 
-        return self.history[-1], self.history[-2
-        ]
+        return self.history[-1], self.history[-2]
 
 
 if __name__ == '__main__':
