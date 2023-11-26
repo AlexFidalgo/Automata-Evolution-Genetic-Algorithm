@@ -69,8 +69,13 @@ class CellularAutomaton:
         t = 0
         
         while t <= stop:
+
             new_cells = get_new_cells(self.dna, self.history[-1][:], self.r)
             self.history.append(new_cells[:])
+
+            if self.history[-1] == self.history[-2]: # testing for fixed-point
+                print("reached fixed point")
+                return self.history[-1], self.history[-2]
 
             t += 1
 
