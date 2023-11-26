@@ -5,9 +5,9 @@ from rule_functions import *
 from initialization import *
 from genetic_algorithm import Chromosome
 
-r = 1
+r = 3
 N = 11
-number_of_ics = 100
+number_of_ics = 99
 
 c1 = Chromosome(N, r, get_all_black)
 c2 = Chromosome(N, r, get_all_white)
