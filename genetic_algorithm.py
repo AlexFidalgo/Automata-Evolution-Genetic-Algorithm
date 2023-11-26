@@ -25,9 +25,9 @@ class Chromosome(CellularAutomaton):
 
         for ic, color in zip(ic_list, ic_color):
             
-            result = self.run(ic)
+            last_res, penultimate_res = self.run(ic)
 
-            if is_result_correct(result, color):
+            if is_result_correct(last_res, color) and is_result_correct(penultimate_res, color):
                 got_right += 1
 
         fitness = calculate_fitness(got_right, len(ic_list))
@@ -48,4 +48,3 @@ if __name__ == '__main__':
 
     ic = get_uniformly_distributed_ic(N, predominant_color=1)
 
-    
