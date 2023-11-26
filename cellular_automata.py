@@ -74,7 +74,8 @@ class CellularAutomaton:
 
             t += 1
 
-        return self.history[-1]
+        return self.history[-1], self.history[-2
+        ]
 
 
 if __name__ == '__main__':
@@ -87,11 +88,9 @@ if __name__ == '__main__':
 
     N = 50
     r = 1
-    rule = 110
 
-    automaton1 = CellularAutomaton(N, r, get_all_black)
-    automaton2 = CellularAutomaton(N, r, get_wolfram_rule, rule = rule)
+    automaton = CellularAutomaton(N, r, get_rule_from_flat_distribution)
 
     ic = get_uniformly_distributed_ic(N, predominant_color=1)
 
-    automaton2.simulate(height, ic)
+    automaton.simulate(height, ic)
