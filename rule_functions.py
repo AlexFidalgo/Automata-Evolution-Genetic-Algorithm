@@ -19,7 +19,7 @@ def get_all_black(r): #last wolfram_rule
 
 def get_all_white(r): #first wolfram_rule
 
-    rule_dict = get_rule_table(r, rule)
+    rule_dict = get_rule_table(r, 0)
 
     return rule_dict
 
