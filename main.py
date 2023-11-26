@@ -1,5 +1,6 @@
 from genetic_algorithm import Chromosome
 from rule_functions import *
+from initialization import *
 
 r = 1
 N = 11
@@ -13,7 +14,7 @@ ic_color = []
 
 for i in range(number_of_ics):
         color = i%2
-        ic.append(get_uniformly_distributed_ic(N, predominant_color=color))
+        ic_list.append(get_uniformly_distributed_ic(N, predominant_color=color))
         ic_color.append(color)
 
 print(f"c1 fitness: {c1.run_multiple(ic_list, ic_color)}")
