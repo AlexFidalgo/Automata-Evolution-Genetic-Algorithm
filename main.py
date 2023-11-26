@@ -17,7 +17,8 @@ for i in range(number_of_ics):
         ic_list.append(get_uniformly_distributed_ic(N, predominant_color=color))
         ic_color.append(color)
 
-print(f"c1 fitness: {c1.run_multiple(ic_list, ic_color)}")
-print(f"c2 fitness: {c2.run_multiple(ic_list, ic_color)}")
+for i in range(10):
 
-# c3 = Chromosome(N, r, get_rule_from_flat_distribution)
+    c = Chromosome(N, r, get_rule_from_flat_distribution)
+    print(f"c fitness: {c.run_multiple(ic_list, ic_color)}")
+
