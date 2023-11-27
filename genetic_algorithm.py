@@ -1,3 +1,4 @@
+import random
 from cellular_automata import CellularAutomaton
 from initialization import *
 from rule_functions import *
@@ -7,16 +8,39 @@ class Population:
 
     def __init__(self, N, r, pop_size, mutation_rate = 0.01):
 
+        self.pop_size = pop_size
         self.population = [Chromosome(N, r, get_rule_from_flat_distribution) for _ in range(pop_size)]
         self.F = [] # fitness list
         self.generations = 0
+
+    def evolve(self, elite_members_fraction = 0.2):
+        """
+•	    In each generation, (1) a new set of 100 ICs was generated, (2) F100 was computed on this set for each rule in the population, (3) CAs in the population were ranked in order of fitness, 
+        (4) the 20 highest fitness (“elite”) rules were copied to the next generation without modification, and (5) the remaining 80 rules for the next generation were formed by single-point 
+        crossovers between randomly chosen pairs of elite rules. The parent rules were chosen from the elite with replacement—that is, an elite rule was permitted to be chosen any number of 
+        times. The offspring from each crossover were each mutated at exactly two randomly chosen positions. This process was repeated for 100 generations for a single run of the GA
+        """
+
+        self.set_fitness
+        self.order_population()
+
+        elite_members = elite_members_fraction*self.pop_size
+
+        next_generation = self.population[:elite_members]
+
+        for _ in range(self.pop_size - elite_members):
+
+            c1 = random.choice(next_generation)
+            c2 = random.choice(next_generation)
+            
+            
 
     def order_population(self):
 
         sorted_pairs = sorted(zip(self.population, self.F), key=lambda x: x[1], reverse=True)
         self.chromosomes = [pair[0] for pair in sorted_pairs]
 
-    def get_fitness(self, number_of_ics = 100):
+    def set_fitness(self, number_of_ics = 100):
 
         ic_list = []
         ic_color = []
@@ -73,7 +97,7 @@ if __name__ == '__main__':
     pop_size = 10
 
     p = Population(N, r, pop_size)
-    p.get_fitness()
+    p.set_fitness()
     
     1+1
 
