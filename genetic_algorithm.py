@@ -5,9 +5,28 @@ from fitness_evaluation import *
 
 class Population:
 
-    def __init__():
+    def __init__(self, N, r, pop_size):
 
-        self.chromosomes
+        self.chromosomes = [Chromosome(N, r, get_rule_from_flat_distribution) for _ in range(pop_size)]
+
+    def get_fitness(self, number_of_ics = 100):
+
+        ic_list = []
+        ic_color = []
+
+        for i in range(number_of_ics):
+                color = i%2
+                ic_list.append(get_uniformly_distributed_ic(N, predominant_color=color))
+                ic_color.append(color)
+
+        self.F = []
+
+        for c in self.chromosomes:
+            self.F.append(c.run_multiple(ic_list, ic_color))
+
+        
+            
+
 
 
 
@@ -38,13 +57,15 @@ class Chromosome(CellularAutomaton):
 
 if __name__ == '__main__':
 
-    N = 51
-    r = 1
-    rule = 110
-    height = Config.height
-    
-    # automaton1 = Chromosome(N, r, get_all_black)
-    automaton2 = Chromosome(N, r, get_wolfram_rule, rule = rule)
+    r = 3
+    N = 149
+    pop_size = 100
 
-    ic = get_uniformly_distributed_ic(N, predominant_color=1)
+    for i in range(70):
+        c = Chromosome(N, r, get_rule_from_flat_distribution)
+        
+        for value in c.dna.values():
+            print(value, end='')
+        print()
+
 
