@@ -24,11 +24,11 @@ class Population:
         for c in self.chromosomes:
             self.F.append(c.run_multiple(ic_list, ic_color))
 
+    def get_max_fitness(self):
+        return max(self.F)
+
         
             
-
-
-
 
 class Chromosome(CellularAutomaton):
 
@@ -61,11 +61,8 @@ if __name__ == '__main__':
     N = 149
     pop_size = 100
 
-    for i in range(70):
-        c = Chromosome(N, r, get_rule_from_flat_distribution)
-        
-        for value in c.dna.values():
-            print(value, end='')
-        print()
+    p = Population(N, r, pop_size)
+    p.get_fitness()
+    print(p.get_max_fitness())
 
 
