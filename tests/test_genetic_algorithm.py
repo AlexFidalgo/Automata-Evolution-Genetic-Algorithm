@@ -22,3 +22,12 @@ for i in range(number_of_ics):
 
 print(f"c1 fitness: {c1.run_multiple(ic_list, ic_color)}")
 print(f"c2 fitness: {c2.run_multiple(ic_list, ic_color)}")
+
+pop_size = 100
+
+for i in range(10):
+c = Chromosome(N, r, get_rule_from_flat_distribution)
+
+for value in c.dna.values():
+        print(value, end='')
+print()
