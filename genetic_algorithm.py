@@ -5,13 +5,15 @@ from fitness_evaluation import *
 
 class Population:
 
-    def __init__(self, N, r, pop_size):
+    def __init__(self, N, r, pop_size, mutation_rate = 0.01):
 
-        self.chromosomes = [Chromosome(N, r, get_rule_from_flat_distribution) for _ in range(pop_size)]
+        self.population = [Chromosome(N, r, get_rule_from_flat_distribution) for _ in range(pop_size)]
+        self.F = [] # fitness list
+        self.generations = 0
 
-    def order_chromosomes(self):
+    def order_population(self):
 
-        sorted_pairs = sorted(zip(self.chromosomes, self.F), key=lambda x: x[1], reverse=True)
+        sorted_pairs = sorted(zip(self.population, self.F), key=lambda x: x[1], reverse=True)
         self.chromosomes = [pair[0] for pair in sorted_pairs]
 
     def get_fitness(self, number_of_ics = 100):
@@ -26,13 +28,15 @@ class Population:
 
         self.F = []
 
-        for c in self.chromosomes:
+        for c in self.population:
             self.F.append(c.run_multiple(ic_list, ic_color))
 
-        self.order_chromosomes()
 
     def get_max_fitness(self):
-        return max(self.F)
+
+        if self.F:
+            return max(self.F)
+        return None
 
         
             
