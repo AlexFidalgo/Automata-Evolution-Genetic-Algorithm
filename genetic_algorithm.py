@@ -12,7 +12,7 @@ class Population:
     def order_chromosomes(self):
 
         sorted_pairs = sorted(zip(self.chromosomes, self.F), key=lambda x: x[1], reverse=True)
-        self.chromosomes_ordered = [pair[0] for pair in sorted_pairs]
+        self.chromosomes = [pair[0] for pair in sorted_pairs]
 
     def get_fitness(self, number_of_ics = 100):
 
