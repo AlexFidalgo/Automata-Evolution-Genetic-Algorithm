@@ -9,6 +9,11 @@ class Population:
 
         self.chromosomes = [Chromosome(N, r, get_rule_from_flat_distribution) for _ in range(pop_size)]
 
+    def order_chromosomes(self):
+
+        sorted_pairs = sorted(zip(self.chromosomes, self.F), key=lambda x: x[1], reverse=True)
+        self.chromosomes_ordered = [pair[0] for pair in sorted_pairs]
+
     def get_fitness(self, number_of_ics = 100):
 
         ic_list = []
@@ -23,6 +28,8 @@ class Population:
 
         for c in self.chromosomes:
             self.F.append(c.run_multiple(ic_list, ic_color))
+
+        self.order_chromosomes()
 
     def get_max_fitness(self):
         return max(self.F)
@@ -57,12 +64,12 @@ class Chromosome(CellularAutomaton):
 
 if __name__ == '__main__':
 
-    r = 3
-    N = 149
-    pop_size = 100
+    r = 1
+    N = 50
+    pop_size = 10
 
     p = Population(N, r, pop_size)
     p.get_fitness()
-    print(p.get_max_fitness())
-
+    
+    1+1
 
