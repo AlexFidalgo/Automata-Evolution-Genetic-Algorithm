@@ -1,4 +1,5 @@
 import random
+import time
 from cellular_automata import CellularAutomaton
 from initialization import *
 from rule_functions import *
@@ -74,7 +75,7 @@ class Chromosome(CellularAutomaton):
 
     def mutate(self, mutation_rate=0.02):
 
-        points_to_mutate = mutation_rate*self.N
+        points_to_mutate = int(mutation_rate*self.N)
 
         for i in range(points_to_mutate):
 
@@ -121,19 +122,24 @@ class Chromosome(CellularAutomaton):
 
 if __name__ == '__main__':
 
-    r = 1
+    r = 3
     N = 149
     pop_size = 100
     mutation_rate = 0.02
-
     generations = 100
 
+    start_time = time.time()
     p = Population(N, r, pop_size, mutation_rate)
 
     p.set_fitness()
     print(f"Initial maximum fitness: {p.get_max_fitness()}")
 
     for i in range(generations):
+
+        elapsed_time_seconds = time.time() - start_time
+        hours = int(elapsed_time_seconds // 3600)
+        minutes = int((elapsed_time_seconds % 3600) // 60)
+        print(f"Time elapsed: {int(hours)}h:{int(minutes)}min")
 
         p.evolve()
 
