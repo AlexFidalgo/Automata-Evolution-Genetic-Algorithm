@@ -1,4 +1,7 @@
 import pygame
+import textwrap
+from config import Config
+from initialization import *
 
 def get_total_number_of_cells(r): 
 
@@ -75,6 +78,46 @@ def get_rule_dict_from_rule_list(rule_list):
     rule_dict = {format(i, '0' + str(round(math.log(len(rule_list))/math.log(2))) + 'b'): v
                 for i,v in enumerate(rule_list)}
     return rule_dict
+
+def user_option(p):
+
+    option = 1
+
+    while option != 0:
+        
+        s = textwrap.dedent("""
+            Type q to quit.
+            Type e to evolve.
+            Type s to simulate the best chromosome.
+            Type a to automatically evolve from now on.
+            Type an integer n to evolve n generations.
+            Type here: """)
+        option = input(s).lower()
+
+        if option == 's':
+            p.population[0].simulate(Config.height, get_uniformly_distributed_ic(p.population[0].N, predominant_color=1), stop = 100)
+
+        elif option == 'q':
+            ret = 'q'
+            return ret
+
+        elif option =='a':
+            ret = 'c'
+            return ret
+
+        else:
+            if option == 'e':
+                option = '1'
+            try:
+                generations_to_evolve = int(option)
+            except:
+                print("Invalid Entry")
+                continue
+            for i in range(generations_to_evolve):
+                p.evolve()
+                print(f"\nCurrent generation: {p.generations}")
+                print(f"Current fitness: --------> {p.get_max_fitness()}")
+
 
 if __name__ == '__main__':
 

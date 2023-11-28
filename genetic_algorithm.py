@@ -1,5 +1,6 @@
 import random
 import time
+import sys
 from cellular_automata import CellularAutomaton
 from initialization import *
 from rule_functions import *
@@ -67,7 +68,7 @@ class Population:
 
 class Chromosome(CellularAutomaton):
 
-    def __init__(self, N, r, rule_function, ic_function=get_random_ic, **kwargs):
+    def __init__(self, N, r, rule_function, ic_function=get_uniformly_distributed_ic, **kwargs):
         super().__init__(N, r, rule_function, ic_function, **kwargs)
 
     def show_dna(self):
@@ -122,11 +123,12 @@ class Chromosome(CellularAutomaton):
 
 if __name__ == '__main__':
 
-    r = 3
-    N = 149
+    r = 1
+    N = 49
     pop_size = 100
     mutation_rate = 0.02
     generations = 100
+    manual = True
 
     start_time = time.time()
     p = Population(N, r, pop_size, mutation_rate)
@@ -134,17 +136,23 @@ if __name__ == '__main__':
     p.set_fitness()
     print(f"Initial maximum fitness: {p.get_max_fitness()}")
 
+    if manual:
+        ret = user_option(p)
+        if ret == 'q':
+            sys.exit(0)
+
     for i in range(generations):
 
         elapsed_time_seconds = time.time() - start_time
         hours = int(elapsed_time_seconds // 3600)
         minutes = int((elapsed_time_seconds % 3600) // 60)
-        print(f"Time elapsed: {int(hours)}h:{int(minutes)}min")
+        print(f"{int(hours)}h{int(minutes)}min")
+
 
         p.evolve()
 
         print(f"Current generation: {p.generations}")
-        print(f"Current fitness: {p.get_max_fitness()}")
+        print(f"Current fitness: --------> {p.get_max_fitness()}")
 
 
 
