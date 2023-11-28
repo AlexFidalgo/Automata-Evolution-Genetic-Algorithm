@@ -18,7 +18,7 @@ def get_uniformly_distributed_ic(N, predominant_color=None):
 
     Parameters:
     - N (int): The size of the configuration.
-    - predominant_color (str): If 'black', ensures more black cells; if 'white', ensures more white cells.
+    - predominant_color (int): If 1, ensures more black cells; if 0, ensures more white cells.
 
     Returns:
     list: A list representing the initial configuration with a uniformly distributed density.
@@ -42,6 +42,7 @@ def get_uniformly_distributed_ic(N, predominant_color=None):
     initial_config = [1] * ones_count + [0] * zeros_count
     random.shuffle(initial_config)
     return initial_config
+
 
 if __name__ == '__main__':
     
