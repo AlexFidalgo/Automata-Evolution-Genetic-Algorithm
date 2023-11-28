@@ -33,7 +33,7 @@ class Population:
             c1 = random.choice(next_generation)
             c2 = random.choice(next_generation)
             
-            
+
 
     def order_population(self):
 
@@ -72,6 +72,30 @@ class Chromosome(CellularAutomaton):
 
     def show_dna(self):
         print(self.dna)
+
+    def mutate(self, mutation_rate=0.01):
+
+        points_to_mutate = mutation_rate*self.N
+
+        
+
+    def crossover(self, other):
+
+        dna_values1 = list(self.dna.values())
+        dna_values2 = list(other.dna.values())
+
+        if self.N == other.N:
+
+            crossover_point = random.randint(0, self.N)
+
+        else:
+            raise Exception("Chromosomes have different lenghts")
+
+        dna_values = dna_values1[:crossover_point] + dna_values2[crossover_point:]
+
+        dna = dict(zip(self.dna.keys(), dna_values))
+
+        return Chromosome(self.N, self.r, dna)
 
     def run_multiple(self, ic_list, ic_color, stop = None):
 
