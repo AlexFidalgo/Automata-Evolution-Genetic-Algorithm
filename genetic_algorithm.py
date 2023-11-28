@@ -32,6 +32,11 @@ class Population:
 
             c1 = random.choice(next_generation)
             c2 = random.choice(next_generation)
+
+            next_generation.append(c1.crossover(c2))
+
+        self.population = next_generation
+        self.generations += 1
             
 
 
@@ -73,11 +78,17 @@ class Chromosome(CellularAutomaton):
     def show_dna(self):
         print(self.dna)
 
-    def mutate(self, mutation_rate=0.01):
+    def mutate(self, mutation_rate=0.02):
 
         points_to_mutate = mutation_rate*self.N
 
-        
+        for i in range(points_to_mutate):
+
+            random_key = random.choice(list(self.dna.keys()))
+            if self.dna[random_key] == 0:
+                self.dna[random_key] = 1
+            elif self.dna[random_key] == 1:
+                self.dna[random_key] = 0
 
     def crossover(self, other):
 
