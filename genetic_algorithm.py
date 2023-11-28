@@ -15,10 +15,11 @@ class Population:
         self.F = [] # fitness list
         self.generations = 0
         self.mutation_rate = mutation_rate
+        self.N = N
 
-    def evolve(self, elite_members_fraction = 0.2):
+    def evolve(self, elite_members_fraction = 0.2, use_pred_color = True, number_of_ics = 100):
 
-        self.set_fitness()
+        self.set_fitness(number_of_ics = number_of_ics, use_pred_color = use_pred_color)
         self.order_population()
 
         elite_members = int(elite_members_fraction*self.pop_size)
@@ -44,14 +45,19 @@ class Population:
         sorted_pairs = sorted(zip(self.population, self.F), key=lambda x: x[1], reverse=True)
         self.chromosomes = [pair[0] for pair in sorted_pairs]
 
-    def set_fitness(self, number_of_ics = 100):
+    def set_fitness(self, number_of_ics = 100, use_pred_color = True):
 
         ic_list = []
         ic_color = []
 
         for i in range(number_of_ics):
-                color = None # color = i%2
-                ic_list.append(get_uniformly_distributed_ic(N, predominant_color=color))
+                if use_pred_color:
+                    color = i%2
+                    ic_list.append(get_uniformly_distributed_ic(self.N, predominant_color=color))   
+                else:
+                    ic = get_uniformly_distributed_ic(self.N)
+                    color = get_pred_color(ic)
+                    ic_list.append(ic)
                 ic_color.append(color)
 
         self.F = []
@@ -128,16 +134,17 @@ if __name__ == '__main__':
     pop_size = 100
     mutation_rate = 0.02
     generations = 100
-    manual = True
+    use_pred_color = False
+    manual = False
 
     start_time = time.time()
     p = Population(N, r, pop_size, mutation_rate)
 
-    p.set_fitness()
+    p.set_fitness(use_pred_color=use_pred_color)
     print(f"Initial maximum fitness: {p.get_max_fitness()}")
 
     if manual:
-        ret = user_option(p)
+        ret = user_option(p, use_pred_color=use_pred_color)
         if ret == 'q':
             sys.exit(0)
 
@@ -149,7 +156,7 @@ if __name__ == '__main__':
         print(f"{int(hours)}h{int(minutes)}min")
 
 
-        p.evolve()
+        p.evolve(use_pred_color=use_pred_color)
 
         print(f"Current generation: {p.generations}")
         print(f"Current fitness: --------> {p.get_max_fitness()}")
