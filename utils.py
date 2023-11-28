@@ -79,7 +79,7 @@ def get_rule_dict_from_rule_list(rule_list):
                 for i,v in enumerate(rule_list)}
     return rule_dict
 
-def user_option(p):
+def user_option(p, use_pred_color=True):
 
     option = 1
 
@@ -114,9 +114,15 @@ def user_option(p):
                 print("Invalid Entry")
                 continue
             for i in range(generations_to_evolve):
-                p.evolve()
+                p.evolve(use_pred_color = use_pred_color)
                 print(f"\nCurrent generation: {p.generations}")
                 print(f"Current fitness: --------> {p.get_max_fitness()}")
+
+def get_pred_color(ic):
+
+    if sum(ic) > len(ic)/2:
+        return 1
+    return 0
 
 
 if __name__ == '__main__':
