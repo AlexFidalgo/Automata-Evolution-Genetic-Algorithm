@@ -71,6 +71,11 @@ def get_new_cells(rule_dict, current_cells, r):
         
     return new_cells
 
+def get_rule_dict_from_rule_list(rule_list):
+    rule_dict = {format(i, '0' + str(round(math.log(len(rule_list))/math.log(2))) + 'b'): v
+                for i,v in enumerate(rule_list)}
+    return rule_dict
+
 if __name__ == '__main__':
 
 # last rule
