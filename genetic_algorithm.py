@@ -6,25 +6,20 @@ from fitness_evaluation import *
 
 class Population:
 
-    def __init__(self, N, r, pop_size, mutation_rate = 0.01):
+    def __init__(self, N, r, pop_size, mutation_rate = 0.02):
 
         self.pop_size = pop_size
         self.population = [Chromosome(N, r, get_rule_from_flat_distribution) for _ in range(pop_size)]
         self.F = [] # fitness list
         self.generations = 0
+        self.mutation_rate = mutation_rate
 
     def evolve(self, elite_members_fraction = 0.2):
-        """
-•	    In each generation, (1) a new set of 100 ICs was generated, (2) F100 was computed on this set for each rule in the population, (3) CAs in the population were ranked in order of fitness, 
-        (4) the 20 highest fitness (“elite”) rules were copied to the next generation without modification, and (5) the remaining 80 rules for the next generation were formed by single-point 
-        crossovers between randomly chosen pairs of elite rules. The parent rules were chosen from the elite with replacement—that is, an elite rule was permitted to be chosen any number of 
-        times. The offspring from each crossover were each mutated at exactly two randomly chosen positions. This process was repeated for 100 generations for a single run of the GA
-        """
 
-        self.set_fitness
+        self.set_fitness()
         self.order_population()
 
-        elite_members = elite_members_fraction*self.pop_size
+        elite_members = int(elite_members_fraction*self.pop_size)
 
         next_generation = self.population[:elite_members]
 
@@ -33,13 +28,15 @@ class Population:
             c1 = random.choice(next_generation)
             c2 = random.choice(next_generation)
 
-            next_generation.append(c1.crossover(c2))
+            c = c1.crossover(c2)
+
+            c.mutate(self.mutation_rate)
+
+            next_generation.append(c)
 
         self.population = next_generation
         self.generations += 1
             
-
-
     def order_population(self):
 
         sorted_pairs = sorted(zip(self.population, self.F), key=lambda x: x[1], reverse=True)
@@ -66,9 +63,6 @@ class Population:
         if self.F:
             return max(self.F)
         return None
-
-        
-            
 
 class Chromosome(CellularAutomaton):
 
@@ -128,11 +122,23 @@ class Chromosome(CellularAutomaton):
 if __name__ == '__main__':
 
     r = 1
-    N = 50
-    pop_size = 10
+    N = 149
+    pop_size = 100
+    mutation_rate = 0.02
 
-    p = Population(N, r, pop_size)
+    generations = 100
+
+    p = Population(N, r, pop_size, mutation_rate)
+
     p.set_fitness()
-    
-    1+1
+    print(f"Initial maximum fitness: {p.get_max_fitness()}")
+
+    for i in range(generations):
+
+        p.evolve()
+
+        print(f"Current generation: {p.generations}")
+        print(f"Current fitness: {p.get_max_fitness()}")
+
+
 
