@@ -6,7 +6,7 @@ from initialization import *
 
 class CellularAutomaton:
 
-    def __init__(self, N, r, rule_function, ic_function = get_random_ic, **kwargs):
+    def __init__(self, N, r, rule_function, ic_function = get_uniformly_distributed_ic, **kwargs):
 
         # ic_function_kwargs = {key: kwargs[key] for key in kwargs if key in ic_function.__code__.co_varnames}
         # rule_function_kwargs = {key: kwargs[key] for key in kwargs if key in rule_function.__code__.co_varnames}
