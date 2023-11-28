@@ -43,7 +43,7 @@ class Population:
     def order_population(self):
 
         sorted_pairs = sorted(zip(self.population, self.F), key=lambda x: x[1], reverse=True)
-        self.chromosomes = [pair[0] for pair in sorted_pairs]
+        self.population = [pair[0] for pair in sorted_pairs]
 
     def set_fitness(self, number_of_ics = 100, use_pred_color = True):
 
@@ -129,8 +129,8 @@ class Chromosome(CellularAutomaton):
 
 if __name__ == '__main__':
 
-    r = 1
-    N = 49
+    r = 3
+    N = 149
     pop_size = 100
     mutation_rate = 0.02
     generations = 100
