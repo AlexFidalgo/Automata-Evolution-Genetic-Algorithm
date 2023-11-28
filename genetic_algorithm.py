@@ -50,7 +50,7 @@ class Population:
         ic_color = []
 
         for i in range(number_of_ics):
-                color = i%2
+                color = None # color = i%2
                 ic_list.append(get_uniformly_distributed_ic(N, predominant_color=color))
                 ic_color.append(color)
 
