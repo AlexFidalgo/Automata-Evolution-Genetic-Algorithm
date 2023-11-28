@@ -13,7 +13,12 @@ class CellularAutomaton:
 
         self.N = N
         self.r = r
-        self.dna = rule_function(r, **kwargs) # rule_dict
+        if callable(rule_function):
+            self.dna = rule_function(r, **kwargs) # rule_dict
+        elif isinstance(rule_function, dict):
+            self.dna = rule_function
+        else:
+            raise Exception("rule_function does not have appropriate type")
 
     def simulate(self, height, ic, stop = float('inf'), show_time = True, delay = 0.1):
 
