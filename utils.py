@@ -95,7 +95,7 @@ def user_option(p, use_pred_color=True):
         option = input(s).lower()
 
         if option == 's':
-            p.population[0].simulate(Config.height, get_uniformly_distributed_ic(p.population[0].N, predominant_color=1), stop = 100)
+            p.population[0].simulate(Config.height, get_uniformly_distributed_ic(p.population[0].N, predominant_color=1),show_time = False, stop = 30)
 
         elif option == 'q':
             ret = 'q'
