@@ -26,12 +26,12 @@ def plot_get_uniformly_distributed_ic(num_iterations, N, predominant_color=None)
     for value in sorted(count_dict.keys()):
         print(f"{value}: {count_dict[value]} times")
 
-    # bins= [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-    # plt.hist(densities, bins=10, color='blue', edgecolor='black')
-    # plt.title('Density Distribution of Initial Configurations')
-    # plt.xlabel('Density')
-    # plt.ylabel('Frequency')
-    # plt.show()
+    bins= [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    plt.hist(densities, bins=10, color='blue', edgecolor='black')
+    plt.title('Density Distribution of Initial Configurations')
+    plt.xlabel('Density')
+    plt.ylabel('Frequency')
+    plt.show()
 
 num_iterations = 10000
 N = 10
