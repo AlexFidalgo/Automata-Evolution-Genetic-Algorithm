@@ -129,7 +129,7 @@ class Chromosome(CellularAutomaton):
 
 if __name__ == '__main__':
 
-    r = 1
+    r = 3
     N = 49
     pop_size = 200
     mutation_rate = 0.01
