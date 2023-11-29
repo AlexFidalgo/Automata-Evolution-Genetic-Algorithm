@@ -129,12 +129,12 @@ class Chromosome(CellularAutomaton):
 
 if __name__ == '__main__':
 
-    r = 3
-    N = 149
-    pop_size = 100
-    mutation_rate = 0.02
-    generations = 100
-    use_pred_color = False
+    r = 1
+    N = 49
+    pop_size = 200
+    mutation_rate = 0.01
+    generations = 1000
+    use_pred_color = True
     manual = False
 
     start_time = time.time()
