@@ -95,11 +95,13 @@ if __name__ == '__main__':
     r = Config.radius
     rule = Config.rule
 
-    N = 149
-    r = 3
+    N = 49
+    r = 1
+    rule = 30 
 
-    automaton = CellularAutomaton(N, r, get_rule_from_flat_distribution)
+    # automaton = CellularAutomaton(N, r, get_rule_from_flat_distribution)
+    automaton = CellularAutomaton(N, r, get_wolfram_rule, rule = rule)
 
     ic = get_uniformly_distributed_ic(N, predominant_color=1)
 
-    automaton.simulate(height, ic, delay = delay)
+    automaton.simulate(height, ic, delay = delay, show_time = False)
