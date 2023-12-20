@@ -37,7 +37,7 @@ def plot_distribution_histogram(num_iterations, r):
     plt.ylabel('Frequency')
     plt.show()
 
-num_iterations = 1000
+num_iterations = 10000
 r = 3
 # test_get_rule_from_flat_distribution(num_iterations, r)
 plot_distribution_histogram(num_iterations, r)
