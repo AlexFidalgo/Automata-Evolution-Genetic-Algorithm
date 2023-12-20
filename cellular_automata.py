@@ -95,12 +95,15 @@ if __name__ == '__main__':
     r = Config.radius
     rule = Config.rule
 
-    N = 49
-    r = 1
-    rule = 30 
+    N = int(input("Value of N: "))
+    r = int(input("Value of r: "))
+    rule = input("Code of the rule (if empty, will generate from flat distribution): ")
 
-    # automaton = CellularAutomaton(N, r, get_rule_from_flat_distribution)
-    automaton = CellularAutomaton(N, r, get_wolfram_rule, rule = rule)
+    if rule == "":
+        automaton = CellularAutomaton(N, r, get_rule_from_flat_distribution)
+    else:
+        rule = int(rule)
+        automaton = CellularAutomaton(N, r, get_wolfram_rule, rule = rule)
 
     ic = get_uniformly_distributed_ic(N, predominant_color=1)
 
