@@ -19,7 +19,7 @@ class Population:
 
     def evolve(self, elite_members_fraction = 0.2, use_pred_color = True, number_of_ics = 100):
 
-        self.set_fitness(number_of_ics = number_of_ics, use_pred_color = use_pred_color)
+        self.set_fitness(number_of_ics = number_of_ics, use_pred_color = use_pred_color, selection = 'random')
         self.order_population()
 
         elite_members = int(elite_members_fraction*self.pop_size)
@@ -28,8 +28,13 @@ class Population:
 
         for _ in range(self.pop_size - elite_members):
 
-            c1 = random.choice(next_generation)
-            c2 = random.choice(next_generation)
+            if selection == 'random':
+                c1 = select_random(next_generation)
+                c2 = select_random(next_generation)
+
+            elif selection == 'roulette':
+                #define roulette
+                pass
 
             c = c1.crossover(c2)
 
@@ -125,11 +130,14 @@ class Chromosome(CellularAutomaton):
 
         return fitness
 
+def select_random(l):
+    return random.choice(l)
+
 
 
 if __name__ == '__main__':
 
-    r = 3
+    r = 1
     N = 49
     pop_size = 200
     mutation_rate = 0.01
