@@ -17,9 +17,9 @@ class Population:
         self.mutation_rate = mutation_rate
         self.N = N
 
-    def evolve(self, elite_members_fraction = 0.2, use_pred_color = True, number_of_ics = 100):
+    def evolve(self, elite_members_fraction = 0.2, use_pred_color = True, number_of_ics = 100, selection='random'):
 
-        self.set_fitness(number_of_ics = number_of_ics, use_pred_color = use_pred_color, selection = 'random')
+        self.set_fitness(number_of_ics = number_of_ics, use_pred_color = use_pred_color, selection = selection)
         self.order_population()
 
         elite_members = int(elite_members_fraction*self.pop_size)
@@ -50,7 +50,7 @@ class Population:
         sorted_pairs = sorted(zip(self.population, self.F), key=lambda x: x[1], reverse=True)
         self.population = [pair[0] for pair in sorted_pairs]
 
-    def set_fitness(self, number_of_ics = 100, use_pred_color = True):
+    def set_fitness(self, number_of_ics = 100, use_pred_color = True, selection='random'):
 
         ic_list = []
         ic_color = []
@@ -139,11 +139,11 @@ if __name__ == '__main__':
 
     r = 1
     N = 49
-    pop_size = 200
+    pop_size = 100
     mutation_rate = 0.01
-    generations = 1000
+    generations = 100
     use_pred_color = True
-    manual = False
+    manual = True
 
     start_time = time.time()
     p = Population(N, r, pop_size, mutation_rate)
